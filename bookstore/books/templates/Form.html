@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>PHPJabbers.com | Free Book Online Store Website Template</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets/css/form.css' %}" />
+	</head>
+<div class="container">
+      <div class="text">
+         REGISTRATION FORM
+      </div>
+      <form action="{% url 'loghome' %}" method="POST">
+          {% csrf_token %}
+         <div class="form-row">
+            <div class="input-data">
+               <input type="text" name="fname" required>
+               <div class="underline"></div>
+               <label for="">First Name</label>
+            </div>
+            <div class="input-data">
+               <input type="text" name="lname" required>
+               <div class="underline"></div>
+               <label for="">Last Name</label>
+            </div>
+         </div>
+          <div class="form-row">
+            <div class="input-data">
+               <input type="date"  name="dob"required>
+               <div class="underline"></div>
+<!--               <label for="">Date of Birth</label>-->
+            </div>
+            <div class="input-data">
+               <input type="number" name="age" required>
+               <div class="underline"></div>
+               <label for="">Age</label>
+            </div>
+         </div>
+         <div class="form-row">
+             <label style="margin-left:3%;" for="">Gender</label>
+             <div class="gender">
+                <input type="radio" id="male" name="gender" value="male">
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female">Female</label>
+                <input type="radio" id="others" name="gender" value="others">
+                <label for="others">Others</label>
+             </div>
+         </div>
+          <div class="form-row">
+            <div class="input-data">
+               <input type="text" name="email" required>
+               <div class="underline"></div>
+               <label for="">Email Address</label>
+            </div>
+         </div>
+
+          <div class="form-row">
+         <div class="input-data textarea">
+            <textarea rows="8" cols="80"  name="address" required></textarea>
+            <br />
+            <div class="underline"></div>
+            <label for="">Address</label>
+            <br />
+
+         </div>
+         </div>
+
+          <div class="form-row">
+              <div class="input-data dropdown">
+                <label for="">Department</label>
+               <select id="departments" name="departments" class="departments">
+                  <option value="IT Department">IT Department</option>
+                  <option value="Commerce Department">Commerce Department</option>
+                  <option value="Humanities Department">Humanities Department</option>
+               </select>
+              </div>
+
+              <div class="input-data dropdown">
+                 <label for="course">Select your course:</label>
+                  <select id="courses" name="courses" class="courses"></select>
+              </div>
+          </div>
+
+          <div class="form-row">
+              <div class="input-data dropdown">
+                <label for="">Purpose</label>
+               <select id="purpose" name="purpose" class="purpose">
+                  <option value="Enquiry">Enquiry</option>
+                  <option value="Place Order">Place Order</option>
+                  <option value="Return">Return</option>
+               </select>
+              </div>
+          </div>
+
+
+          <div class="form-row" >
+             <ul>
+                <li>
+                  <label>
+                    <input type="checkbox" name="note_book" value="Debit Note Book">
+                    Debit Note Book
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <input type="checkbox" name="pen" value="Pen">
+                    Pen
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <input type="checkbox" name="paper" value="Exam Papers">
+                    Exam Papers
+                  </label>
+                </li>
+              </ul>
+
+          </div>
+
+            <div class="form-row submit-btn">
+               <div class="input-data">
+                  <div class="inner"></div>
+                  <input align="center" type="submit" value="submit">
+               </div>
+            </div>
+
+      </form>
+    <form action="{% url 'logout' %}" method="POST">
+        {% csrf_token %}
+          <div  style="margin-top:-14.8%; margin-left:70%; width: 95%!important; height: 45px!important;" class="form-row submit-btn">
+               <div class="input-data">
+                  <div class="inner"></div>
+                  <input type="submit" value="logout">
+               </div>
+            </div>
+        </form>
+      </div>
+</html>
+
+
+<script>
+  // JavaScript code to handle the dynamic course dropdown based on the selected department
+
+  // Get references to the department and course dropdowns
+  const departmentsDropdown = document.getElementById("departments");
+  const coursesDropdown = document.getElementById("courses");
+
+  // Define the courses for each department in an object
+  const departmentCourses = {
+    "IT Department": ["BCA", "Ethical Hacking", "Web Development"],
+    "Commerce Department": ["B.Com", "Accounting", "Business Management"],
+    "Humanities Department": ["History", "Literature", "Sociology"],
+  };
+
+  // Function to update the course dropdown options based on the selected department
+  function updateCourseDropdown() {
+    const selectedDepartment = departmentsDropdown.value;
+    const courses = departmentCourses[selectedDepartment];
+
+    // Clear existing options in the course dropdown
+    coursesDropdown.innerHTML = "";
+
+    // Add new options based on the selected department
+    courses.forEach((course) => {
+      const option = document.createElement("option");
+      option.value = course;
+      option.textContent = course;
+      coursesDropdown.appendChild(option);
+    });
+  }
+
+  // Add an event listener to the department dropdown to trigger the update of the course dropdown
+  departmentsDropdown.addEventListener("change", updateCourseDropdown);
+
+  // Initial update to populate the course dropdown based on the default selected department (if any)
+  updateCourseDropdown();
+
+    const form = document.querySelector('form'); // Assuming your form element has a selector
+
+    form.addEventListener('submit', function(event) {
+        const genderRadios = document.querySelectorAll('input[name="gender"]');
+        let genderSelected = false;
+
+        for (const radio of genderRadios) {
+            if (radio.checked) {
+                genderSelected = true;
+                break;
+            }
+        }
+
+        if (!genderSelected) {
+            event.preventDefault(); // Prevent form submission
+            alert('Please select a gender.'); // You can display an error message to the user
+        }
+    });
+</script>
